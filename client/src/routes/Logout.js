@@ -8,14 +8,16 @@ export default function Logout() {
   const [errorMessage, setErrorMessage] = useState('');
 
   async function logout() {
-    await signOut(auth);
     console.log('logged out! ');
+    return await signOut(auth);
   }
 
   function handleClick(e) {
-    logout();
-    //In case I need it
-    setErrorMessage('Error goes here');
+    try {
+      logout();
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   }
 
   return (
@@ -31,7 +33,7 @@ export default function Logout() {
       />
       {errorMessage && (
         <div class='alert alert-danger' role='alert'>
-          There's an error Logging Out!
+          {errorMessage}
         </div>
       )}
     </>

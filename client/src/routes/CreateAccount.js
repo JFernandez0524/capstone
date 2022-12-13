@@ -43,7 +43,9 @@ function CreateForm({ setLoggedIn }) {
       );
       const user = userCredential.user;
       console.log(user.email);
+      // if there's a logged in user call create account route
       if (auth.currentUser) {
+        //Every new user starts with 0 balance
         const url = `http://localhost:3001/account/create/${name}/${email}/${password}/0`;
         (async () => {
           var res = await fetch(url);
@@ -52,10 +54,11 @@ function CreateForm({ setLoggedIn }) {
         })();
       }
     } catch (error) {
-      setErrorMessage(error.message);
       const errorCode = error.code;
+      const errorMessage = error.message;
       console.log(errorCode);
       console.log(errorMessage);
+      setErrorMessage(errorMessage);
       clearForm();
       return;
     }

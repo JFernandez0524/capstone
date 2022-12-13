@@ -74,7 +74,7 @@ export default function Withdrawal() {
             </form>
           ) : (
             <button className='text-bg-light'>
-              <Link to={'/login'}>Login To Make A Deposit </Link>
+              <Link to={'/login'}>Login To Make A Withdrawal </Link>
             </button>
           )
         }

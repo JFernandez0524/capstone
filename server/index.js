@@ -4,15 +4,11 @@ var cors = require('cors');
 var dal = require('./dal.js');
 
 // used to serve static files from public directory
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static('public'));
 app.use(cors());
 
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
 // create user account
-app.get('/account/create/:name/:email/:password/:balance', function(req, res) {
+app.get('/account/create/:name/:email/:password/:balance', function (req, res) {
   // check if account exists
   dal.find(req.params.email).then((users) => {
     // if user exists, return error message
@@ -38,7 +34,7 @@ app.get('/account/create/:name/:email/:password/:balance', function(req, res) {
 });
 
 // login user
-app.get('/account/login/:email/:password', function(req, res) {
+app.get('/account/login/:email/:password', function (req, res) {
   dal.find(req.params.email).then((user) => {
     // if user exists, check password
     if (user.length > 0) {
@@ -54,7 +50,7 @@ app.get('/account/login/:email/:password', function(req, res) {
 });
 
 // find user account
-app.get('/account/find/:email', function(req, res) {
+app.get('/account/find/:email', function (req, res) {
   dal.find(req.params.email).then((user) => {
     console.log(user);
     res.send(user);
@@ -62,7 +58,7 @@ app.get('/account/find/:email', function(req, res) {
 });
 
 // find one user by email - alternative to find
-app.get('/account/findOne/:email', function(req, res) {
+app.get('/account/findOne/:email', function (req, res) {
   dal.findOne(req.params.email).then((user) => {
     console.log(user);
     res.send(user);
@@ -70,7 +66,7 @@ app.get('/account/findOne/:email', function(req, res) {
 });
 
 // update - deposit/withdraw amount
-app.get('/account/update/:email/:amount', function(req, res) {
+app.get('/account/update/:email/:amount', function (req, res) {
   var amount = Number(req.params.amount);
   dal.update(req.params.email, amount).then((response) => {
     console.log(response);
@@ -79,7 +75,7 @@ app.get('/account/update/:email/:amount', function(req, res) {
 });
 
 // Create Field - add new key value to user
-app.get('/account/createField/:email/:key/:value', function(req, res) {
+app.get('/account/createField/:email/:key/:value', function (req, res) {
   const key = req.params.key;
   const value = req.params.value;
 
@@ -90,7 +86,7 @@ app.get('/account/createField/:email/:key/:value', function(req, res) {
 });
 
 // all accounts
-app.get('/account/all', function(req, res) {
+app.get('/account/all', function (req, res) {
   dal.all().then((docs) => {
     console.log(docs);
     res.send(docs);
@@ -98,7 +94,7 @@ app.get('/account/all', function(req, res) {
 });
 
 //delete user collection
-app.get('/account/deleteUser/:email', function(req, res) {
+app.get('/account/deleteUser/:email', function (req, res) {
   if (!req.params.email) {
     res.sendStatus(404).send('Email Not Provided');
   } else {

@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  frontend:
+    image: crabadbank
+    build:
+      context: client
+      dockerfile: ./Dockerfile
+    environment:
+      - REACT_APP_FIREBASE_APIKEY= '{REACT_APP_FIREBASE_APIKEY}'
+      - REACT_APP_FIREBASE_AUTHDOMAIN= '{REACT_APP_FIREBASE_AUTHDOMAIN}'
+      - REACT_APP_FIREBASE_PROJECTID= '{REACT_APP_FIREBASE_PROJECTID}'
+      - REACT_APP_FIREBASE_STORAGEBUCKET= '{REACT_APP_FIREBASE_STORAGEBUCKET}'
+      - REACT_APP_FIREBASE_MESSAGINGSENDERID= '{REACT_APP_FIREBASE_MESSAGINGSENDERID}'
+      - REACT_APP_FIREBASE_APPID= '{REACT_APP_FIREBASE_APPID}'
+
+    ports:
+      - 3000:3000
+
+  backend:
+    image: server
+    build:
+      context: server
+      dockerfile: ./Dockerfile
+    environment:
+      - MONGODB_PASSWORD= '{MONGODB_PASSWORD}'
+    ports:
+      - 3001:3001

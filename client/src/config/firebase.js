@@ -7,12 +7,20 @@ import { getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
-  appId: process.env.REACT_APP_FIREBASE_APPID,
+  //Could not get this to work in Docker
+  // apiKey: process.env.FIREBASE_APIKEY,
+  // authDomain: process.env.FIREBASE_AUTHDOMAIN,
+  // projectId: process.env.FIREBASE_PROJECTID,
+  // storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+  // messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
+  // appId: process.env.FIREBASE_APPID,
+
+  apiKey: 'AIzaSyAa5ucD3bm5xaGvadx4Qly5_zPhlSslaUY',
+  authDomain: 'testauth-a8d61.firebaseapp.com',
+  projectId: 'testauth-a8d61',
+  storageBucket: 'testauth-a8d61.appspot.com',
+  messagingSenderId: '744795681690',
+  appId: '1:744795681690:web:fe30a41447d49512424023',
 };
 
 // Initialize Firebase

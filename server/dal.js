@@ -1,17 +1,46 @@
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
-let db = null;
+const { MongoClient } = require('mongodb');
+//connect with docker container
+// const url = 'mongodb://localhost:27017';
+//connect to mongodb atlas
+const url = `mongodb+srv://badbank:asdfasdf@badbank.wc6srxt.mongodb.net/?retryWrites=true&w=majority`;
+const client = new MongoClient(url);
 
-// connect to mongo
-MongoClient.connect(url, { useUnifiedTopology: true }, async function(
-  err,
-  client
-) {
-  console.log('Connected successfully to db server');
+// Database Name
+let db = '';
 
-  // connect to myproject database
-  db = await client.db('badBank');
-});
+// connect to mongo mit codes
+MongoClient.connect(
+  url,
+  { useUnifiedTopology: true },
+  async function (err, client) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log('Connected successfully to db server');
+
+    // connect to myproject database
+    db = client.db('badBank');
+  }
+);
+
+//connect to mongo atlas node.js driver instructions
+// async function main() {
+//   // Use connect method to connect to the server
+//   await client.connect();
+//   console.log('Connected successfully to server');
+//   const db = client.db(db);
+//   const collection = db.collection('users');
+
+//   // the following code examples can be pasted here...
+
+//   return 'done.';
+// }
+
+// main()
+//   .then(console.log)
+//   .catch(console.error)
+//   .finally(() => client.close());
 
 // create user account using the collection.insertOne function
 function create(name, email, password, balance) {
@@ -31,7 +60,7 @@ function find(email) {
     const customers = db
       .collection('users')
       .find({ email: email })
-      .toArray(function(err, docs) {
+      .toArray(function (err, docs) {
         err ? reject(err) : resolve(docs);
       });
   });
@@ -57,7 +86,7 @@ function update(email, amount) {
         { email: email },
         { $set: { balance: amount } },
         { returnDocument: 'after' },
-        function(err, documents) {
+        function (err, documents) {
           err ? reject(err) : resolve(documents);
         }
       );
@@ -73,7 +102,7 @@ function createField(email, key, value) {
         { email: email },
         { $set: { key: value } },
         { checkkeys: 'false' },
-        function(err, documents) {
+        function (err, documents) {
           err ? reject(err) : resolve(documents);
         }
       );
@@ -86,7 +115,7 @@ function all() {
     const customer = db
       .collection('users')
       .find({})
-      .toArray(function(err, docs) {
+      .toArray(function (err, docs) {
         err ? reject(err) : resolve(docs);
       });
   });
@@ -97,7 +126,7 @@ function deleteUser(email) {
   return new Promise((resolve, reject) => {
     const customer = db
       .collection('users')
-      .findOneAndDelete({ email: email }, function(err, document) {
+      .findOneAndDelete({ email: email }, function (err, document) {
         err ? reject(err) : resolve(document);
       });
   });
